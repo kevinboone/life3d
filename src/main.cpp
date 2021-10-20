@@ -85,6 +85,8 @@ int main (int argc, char **argv)
   int delay = 1;
   // Proportion of cells alive in initial seeding
   double filling = 0.5;
+  // Enable hiding the cursor
+  bool cursor = false;
 
   bool version = false;
   bool help = false;
@@ -92,6 +94,7 @@ int main (int argc, char **argv)
 
   static struct option long_options[] =
     {
+      {"cursor", no_argument, NULL, 'c'},
       {"delay", required_argument, NULL, 'd'},
       {"fbdev", required_argument, NULL, 'f'},
       {"filling", required_argument, NULL, 'i'},
@@ -108,14 +111,13 @@ int main (int argc, char **argv)
    while (carry_on)
      {
      int option_index = 0;
-     opt = getopt_long (argc, argv, "hvf:p:q:g:d:s:i:", long_options, &option_index);
+     opt = getopt_long (argc, argv, "hvf:p:q:g:d:s:i:c", long_options, &option_index);
 
      if (opt == -1) break;
 
      switch (opt)
        {
        case 0:
-	 printf ("hello\n");
          break;
        case 'v': 
 	 version = true; 
@@ -143,6 +145,9 @@ int main (int argc, char **argv)
 	 break;
        case 'i': 
 	 filling = atof (optarg);
+	 break;
+       case 'c': 
+	 cursor = true; 
 	 break;
        default:
          carry_on = false; 
@@ -196,8 +201,11 @@ int main (int argc, char **argv)
       srand (time (NULL));
       
       // Hide cursor
-      fputs("\e[?25l", stdout);
-      fflush (stdout);
+      if (cursor)
+        {
+        fputs("\e[?25l", stdout);
+        fflush (stdout);
+        }
 
       // FB initialized OK. We can get to work
       int fb_width = framebuffer_get_width (fb);

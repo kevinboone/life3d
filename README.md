@@ -47,6 +47,14 @@ The usual:
 
 ## Command-line options
 
+*-c,--cursor*
+
+Make `life3d` send the control sequence to disable the flashing 
+screen cursor on start-up, and to re-enable it on exit. 
+This is not the default, because not all Linux terminals respond to these 
+control sequences, and some break completely.
+
+
 *-d,--delay [seconds]*
 
 Number of seconds to wait before drawing each generation.
@@ -117,10 +125,6 @@ Linux displays are of this type, but from comments I've received
 on some of my other programs, I'm aware that not all are. Sadly,
 there isn't a huge amount I can do about this, unless somebody wants
 to send me some hardware to test with.
-
-`life3d` sends the control sequence to disable the flashing 
-screen cursor on start-up, and to re-enable it on exit. However,
-not all Linux terminals respond to these control sequences.
 
 ## Potential hacks 
 
